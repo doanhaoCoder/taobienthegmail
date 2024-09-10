@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biến thể chuỗi với dấu chấm và số thứ tự</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      input,
+      button {
+        padding: 10px;
+        margin: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Tạo biến thể chuỗi với dấu chấm</h1>
+    <label for="inputString">Nhập chuỗi:</label>
+    <input type="text" id="inputString" placeholder="Nhập chuỗi..." />
+    <button onclick="generateVariants()">Tạo biến thể</button>
+
+    <h2>Các biến thể:</h2>
+    <div id="variantList"></div>
+
+    <script>
+      function generateVariants() {
+        const inputString = document.getElementById("inputString").value;
+        const variants = [];
+
+        // Hàm tạo biến thể chuỗi
+        function generateCombinations(str, idx, current) {
+          if (idx === str.length) {
+            variants.push(current);
+            return;
+          }
+
+          // Thêm ký tự hiện tại
+          generateCombinations(str, idx + 1, current + str[idx]);
+
+          // Thêm ký tự hiện tại kèm dấu chấm (nếu chưa ở cuối)
+          if (idx < str.length - 1) {
+            generateCombinations(str, idx + 1, current + str[idx] + ".");
+          }
+        }
+
+        // Gọi hàm để tạo các biến thể
+        generateCombinations(inputString, 0, "");
+
+        // Hiển thị kết quả
+        const variantList = document.getElementById("variantList");
+        variantList.innerHTML = ""; // Xóa kết quả trước đó
+
+        variants.forEach((variant, index) => {
+          const listItem = document.createElement("div");
+          listItem.textContent = `${index + 1}|  ${variant}@gmail.com`; // Thêm số thứ tự và "@gmail.com"
+          variantList.appendChild(listItem);
+        });
+      }
+    </script>
+  </body>
+</html>
